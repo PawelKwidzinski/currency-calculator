@@ -33,10 +33,4 @@ public class Currency {
 
     @OneToMany(mappedBy = "currency", fetch = FetchType.LAZY)
     private List<CurrencyRate> currencyRates;
-
-    public Currency(final String symbol, final String name, final LocalDate date) {
-        this.symbol = symbol;
-        this.name = name;
-        this.date = date;
-    }
 }
