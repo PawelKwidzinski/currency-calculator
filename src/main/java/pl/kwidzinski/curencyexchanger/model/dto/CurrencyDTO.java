@@ -8,7 +8,6 @@ import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 
 @Getter
-@Setter
 public class CurrencyDTO {
 
     @NotNull(message = "Quantity for currency should be not null")
