@@ -23,7 +23,7 @@ public class CurrencyRateService {
     public void addRate(final CurrencyRateDTO dto) {
         Currency currency = currencyRepository.findById(dto.getCurrencyId())
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Currency with id: %d not found", dto.getCurrencyId())));
-        CurrencySymbol currencySymbol = currencySymbolRepository.findBySymbol(dto.getSymbol())
+        CurrencySymbol currencySymbol = currencySymbolRepository.findBySymbol(dto.getSymbol().toUpperCase())
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Currency symbol: %s not found", dto.getSymbol())));
 
         CurrencyRate currencyRate = new CurrencyRate();

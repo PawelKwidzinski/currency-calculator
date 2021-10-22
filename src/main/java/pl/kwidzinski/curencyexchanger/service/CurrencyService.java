@@ -30,10 +30,12 @@ public class CurrencyService {
     }
 
     public void save(final CurrencyDTO dto) {
-        CurrencySymbol currencySymbol = currencySymbolRepository.findBySymbol(dto.getSymbol())
+        CurrencySymbol currencySymbol = currencySymbolRepository.findBySymbol(dto.getSymbol().toUpperCase())
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Currency symbol %s not found", dto.getSymbol())));
 
         Currency currency = new Currency();
+
+        currency.setQuantity(dto.getQuantity());
         currency.setSymbol(currencySymbol.getSymbol());
         currency.setName(currencySymbol.getName());
         currency.setDate(dto.getCreationDate());

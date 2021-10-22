@@ -20,12 +20,12 @@ public class CurrencySymbolService {
     }
 
     public void saveCurrencySymbol(final CurrencySymbolDTO dto) {
-        if (currencySymbolRepository.existsBySymbol(dto.getSymbol())) {
+        if (currencySymbolRepository.existsBySymbol(dto.getSymbol().toUpperCase())) {
             throw new EntityFoundException(CurrencySymbol.class, "symbol = " + dto.getSymbol());
         }
 
         CurrencySymbol currencySymbol = new CurrencySymbol();
-        currencySymbol.setSymbol(dto.getSymbol());
+        currencySymbol.setSymbol(dto.getSymbol().toUpperCase());
         currencySymbol.setName(dto.getName());
 
         currencySymbolRepository.save(currencySymbol);
