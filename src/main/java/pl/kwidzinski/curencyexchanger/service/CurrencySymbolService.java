@@ -2,7 +2,8 @@ package pl.kwidzinski.curencyexchanger.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.kwidzinski.curencyexchanger.exceptions.definition.EntityFoundException;
+import pl.kwidzinski.curencyexchanger.exceptions.definition.ObjectFoundException;
+import pl.kwidzinski.curencyexchanger.exceptions.definition.ObjectNotFoundException;
 import pl.kwidzinski.curencyexchanger.model.CurrencySymbol;
 import pl.kwidzinski.curencyexchanger.model.dto.CurrencySymbolDTO;
 import pl.kwidzinski.curencyexchanger.repository.CurrencySymbolRepository;
@@ -21,7 +22,7 @@ public class CurrencySymbolService {
 
     public void saveCurrencySymbol(final CurrencySymbolDTO dto) {
         if (currencySymbolRepository.existsBySymbol(dto.getSymbol().toUpperCase())) {
-            throw new EntityFoundException(CurrencySymbol.class, "symbol = " + dto.getSymbol());
+            throw new ObjectFoundException(CurrencySymbol.class, "symbol = " + dto.getSymbol());
         }
 
         CurrencySymbol currencySymbol = new CurrencySymbol();
@@ -29,6 +30,26 @@ public class CurrencySymbolService {
         currencySymbol.setName(dto.getName());
 
         currencySymbolRepository.save(currencySymbol);
+    }
+
+    public void updateCurrencySymbol(final Long id, final CurrencySymbolDTO dto) {
+        final CurrencySymbol currencySymbolFromDB = currencySymbolRepository.findById(id)
+                        .orElseThrow(() -> new ObjectNotFoundException(CurrencySymbol.class, "symbol = " + dto.getSymbol()));
+
+        if (currencySymbolRepository.existsBySymbol(dto.getSymbol())) {
+            throw new ObjectFoundException(CurrencySymbol.class, "symbol = " + dto.getSymbol());
+        }
+        currencySymbolFromDB.setSymbol(dto.getSymbol().toUpperCase());
+        currencySymbolFromDB.setName(dto.getName());
+
+        currencySymbolRepository.save(currencySymbolFromDB);
+    }
+
+    public void deleteCurrencySymbol(final Long id) {
+        if (currencySymbolRepository.existsById(id)) {
+            currencySymbolRepository.deleteById(id);
+        }
+        throw new ObjectNotFoundException(CurrencySymbol.class, "id = " + id);
     }
 }
 
