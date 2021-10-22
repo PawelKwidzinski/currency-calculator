@@ -2,6 +2,7 @@ package pl.kwidzinski.curencyexchanger.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +30,7 @@ public class CurrencyController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void addCurrency(@RequestBody @Valid CurrencyDTO dto) {
         currencyService.save(dto);
     }
@@ -42,9 +44,9 @@ public class CurrencyController {
 
     @GetMapping("/calculate")
     public ResponseEntity<CurrencyCalculationDTO> getCalculateCurrency(@RequestParam String date,
-                                                                    @RequestParam String baseSymbol,
-                                                                    @RequestParam int quantity,
-                                                                    @RequestParam String calculateSymbol) {
+                                                                       @RequestParam String baseSymbol,
+                                                                       @RequestParam int quantity,
+                                                                       @RequestParam String calculateSymbol) {
         return ResponseEntity.ok(currencyService.calculateCurrency(date, baseSymbol, quantity, calculateSymbol));
     }
 }
