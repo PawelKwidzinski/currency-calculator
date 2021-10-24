@@ -2,6 +2,7 @@ package pl.kwidzinski.curencyexchanger.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
@@ -31,6 +32,7 @@ public class Currency {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "currency", fetch = FetchType.LAZY)
     private List<CurrencyRate> currencyRates;
 }

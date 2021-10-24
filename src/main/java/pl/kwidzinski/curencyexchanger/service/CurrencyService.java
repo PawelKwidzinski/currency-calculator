@@ -7,7 +7,7 @@ import pl.kwidzinski.curencyexchanger.exceptions.definition.ObjectNotFoundExcept
 import pl.kwidzinski.curencyexchanger.model.Currency;
 import pl.kwidzinski.curencyexchanger.model.CurrencyRate;
 import pl.kwidzinski.curencyexchanger.model.CurrencySymbol;
-import pl.kwidzinski.curencyexchanger.model.dto.CurrencyCalculationDTO;
+import pl.kwidzinski.curencyexchanger.model.dto.CurrencyResultDTO;
 import pl.kwidzinski.curencyexchanger.model.dto.CurrencyDTO;
 import pl.kwidzinski.curencyexchanger.model.dto.CurrencyUpdateDTO;
 import pl.kwidzinski.curencyexchanger.repository.CurrencyRateRepository;
@@ -18,7 +18,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import static pl.kwidzinski.curencyexchanger.model.dto.CurrencyCalculationDTO.buildCalculationDTO;
+import static pl.kwidzinski.curencyexchanger.model.dto.CurrencyResultDTO.buildCalculationDTO;
 
 @Service
 @RequiredArgsConstructor
@@ -51,7 +51,7 @@ public class CurrencyService {
         }
     }
 
-    public CurrencyCalculationDTO calculateCurrency(final String date, final String baseSymbol, final int quantity, final String calculateSymbol) {
+    public CurrencyResultDTO calculateCurrency(final String date, final String baseSymbol, final int quantity, final String calculateSymbol) {
         Currency currency = findByDateAndSymbol(date, baseSymbol)
                 .orElseThrow(() -> new ObjectNotFoundException(Currency.class, date, baseSymbol));
 
