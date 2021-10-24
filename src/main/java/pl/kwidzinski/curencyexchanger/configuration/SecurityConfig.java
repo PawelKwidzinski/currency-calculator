@@ -35,6 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/currencies/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/currencies/**").hasRole(AccountRole.ADMIN.name())
+                .antMatchers(HttpMethod.PATCH, "/currencies/**").hasRole(AccountRole.ADMIN.name())
+                .antMatchers(HttpMethod.DELETE, "/currencies/**").hasRole(AccountRole.ADMIN.name())
                 .anyRequest()
                 .authenticated()
                 .and()
