@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.kwidzinski.curencyexchanger.model.Currency;
-import pl.kwidzinski.curencyexchanger.model.dto.CurrencyCalculationDTO;
+import pl.kwidzinski.curencyexchanger.model.dto.CurrencyCalculateDTO;
+import pl.kwidzinski.curencyexchanger.model.dto.CurrencyResultDTO;
 import pl.kwidzinski.curencyexchanger.model.dto.CurrencyDTO;
 import pl.kwidzinski.curencyexchanger.model.dto.CurrencyUpdateDTO;
 import pl.kwidzinski.curencyexchanger.service.CurrencyService;
@@ -59,10 +60,8 @@ public class CurrencyController {
     }
 
     @GetMapping("/calculate")
-    public ResponseEntity<CurrencyCalculationDTO> getCalculateCurrency(@RequestParam String date,
-                                                                       @RequestParam String baseSymbol,
-                                                                       @RequestParam int quantity,
-                                                                       @RequestParam String calculateSymbol) {
-        return ResponseEntity.ok(currencyService.calculateCurrency(date, baseSymbol, quantity, calculateSymbol));
+    public ResponseEntity<CurrencyResultDTO> getCalculateCurrency(@RequestBody CurrencyCalculateDTO dto) {
+        return ResponseEntity.ok(currencyService.calculateCurrency
+                (dto.getDate(), dto.getBaseSymbol(), dto.getQuantity(), dto.getCalculateSymbol()));
     }
 }
