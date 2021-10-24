@@ -1,5 +1,6 @@
 # Currency-calculator - recruitment task
 Use Spring/Spring Boot to create simple API for currency exchange.
+#### Main points
 * service should return data in JSON format using REST
 * data is not relevant (can be mocked, hardcoded, randomised)
 * return list of available currency symbols (USD - US dollar, etc. - a few will suffice)
@@ -10,8 +11,9 @@ Use Spring/Spring Boot to create simple API for currency exchange.
 * add a new symbol/currency
 * delete an existing symbol/currency
 * update an existing symbol/currency
+## General
+Application with "Currency", "Currrency Rate" and "Currency Symbol" as model displaying in JSON format. Data is stored in a MySQL database. Test data are from DataInitializer class. Before starting App should default user and default password be added for ADMIN ROLE in application.properties file.
 ## Main features
-Before starting App should default user and default password be added for ADMIN ROLE in application.properties file. Test data are from DataInitializer class.
 * CRUD (Currency, Currency Rate, Currency Symbol)
 * HTTP methods: POST, PATCH and DELETE are available for ADMIN role
 * Searching for currency rates by date
