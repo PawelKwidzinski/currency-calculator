@@ -55,16 +55,22 @@ public class CurrencyRateService {
         CurrencySymbol currencySymbolFromDB = currencySymbolRepository.findBySymbol(dto.getSymbol().toUpperCase())
                 .orElseThrow(() -> new ObjectNotFoundException(CurrencySymbol.class, "symbol = " + dto.getSymbol()));
 
-        currencyRateFromDB.setSymbol(currencySymbolFromDB.getSymbol());
-        currencyRateFromDB.setRate(dto.getValue());
+        final Currency currency = currencyRateFromDB.getCurrency();
+        if (currency.getSymbol().equals(currencySymbolFromDB.getSymbol())) {
+            throw new ObjectFoundException(CurrencySymbol.class, "base symbol  = " + currencySymbolFromDB.getSymbol());
+        } else {
+            currencyRateFromDB.setSymbol(currencySymbolFromDB.getSymbol());
+            currencyRateFromDB.setRate(dto.getValue());
 
-        currencyRateRepository.save(currencyRateFromDB);
+            currencyRateRepository.save(currencyRateFromDB);
+        }
     }
 
     public void deleteRate(final Long id) {
         if (currencyRateRepository.existsById(id)) {
             currencyRateRepository.deleteById(id);
+        } else {
+            throw new ObjectNotFoundException(CurrencyRate.class, "id = " + id);
         }
-        throw new ObjectNotFoundException(CurrencyRate.class, "id = " + id);
     }
 }
